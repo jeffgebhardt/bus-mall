@@ -30,7 +30,7 @@ var updateImages = function(){
     var userAnswer = prompt('Would you like to keep playing? (y or n)');
     if (userAnswer == 'y') {
       counter++;
-      this.updateImagesTWo = updateImages();
+      this.updateImagesTwo = updateImages();
       updateImagesTwo();
     }
     else {
@@ -83,3 +83,16 @@ document.getElementById('1').addEventListener('click', updateImages);
 document.getElementById('2').addEventListener('click', updateImages);
 
 updateImages();
+
+var ctx = document.getElementById('votesChart').getContext('2d');
+
+var votesChart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ['test1', 'test2', 'test3'],
+    datasets: [{
+      label: 'Number of Votes',
+      data: [5, 3, 2]
+    }]
+  },
+});
