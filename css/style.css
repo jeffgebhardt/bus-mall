@@ -1,0 +1,20 @@
+.contentWrapper{
+  margin: 0 auto;
+  width: 800px;
+}
+
+.header{
+  text-align: center;
+}
+
+.imagesContainer{
+  padding: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 800px;
+}
+
+img{
+  float: right;
+  padding: 5px;
+}
