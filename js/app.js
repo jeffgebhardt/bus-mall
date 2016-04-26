@@ -24,30 +24,58 @@ new imageConstructor('dragon', 'img/dragon.jpg');
 
 var updateImages = function(){
   'use strict';
-  document.getElementById('0').innerHTML = null;
-  document.getElementById('1').innerHTML = null;
-  document.getElementById('2').innerHTML = null;
 
-  var currentImages = [];
-
-  for (var i = 0; i < 3; i++) {
-    var image = document.createElement('img');
-    var randomNumber = Math.floor(Math.random() * (10 - 0) + 0);
-    console.log(randomNumber);
-    if (randomNumber == currentImages[0] || randomNumber == currentImages[1]) {
-      randomNumber = Math.floor(Math.random() * (10 - 0) + 0);
+  switch (counter) {
+  case 5:
+    var userAnswer = prompt('Would you like to keep playing? (y or n)');
+    if (userAnswer == 'y') {
+      counter++;
+      this.updateImagesTWo = updateImages();
+      updateImagesTwo();
     }
-    images[randomNumber].numTimesShown += 1;
-    image.src = images[randomNumber].filePath;
-    image.setAttribute('height', '250');
-    image.setAttribute('width', '250');
-    document.getElementById(i).appendChild(image);
-    currentImages.push(randomNumber);
+    else {
+      alert('Game Over');
+    }
+    document.getElementById('0').innerHTML = null;
+    document.getElementById('1').innerHTML = null;
+    document.getElementById('2').innerHTML = null;
+    break;
+
+  case 16:
+    alert('Game over');
+    document.getElementById('0').innerHTML = null;
+    document.getElementById('1').innerHTML = null;
+    document.getElementById('2').innerHTML = null;
+    break;
+
+  default:
+
+    document.getElementById('0').innerHTML = null;
+    document.getElementById('1').innerHTML = null;
+    document.getElementById('2').innerHTML = null;
+
+    var currentImages = [];
+
+    for (var i = 0; i < 3; i++) {
+      var image = document.createElement('img');
+      var randomNumber = Math.floor(Math.random() * (10 - 0) + 0);
+      console.log(randomNumber);
+      if (randomNumber == currentImages[0] || randomNumber == currentImages[1]) {
+        randomNumber = Math.floor(Math.random() * (10 - 0) + 0);
+      }
+      images[randomNumber].numTimesShown += 1;
+      image.src = images[randomNumber].filePath;
+      image.setAttribute('height', '250');
+      image.setAttribute('width', '250');
+      document.getElementById(i).appendChild(image);
+      currentImages.push(randomNumber);
+    };
+    console.log(currentImages);
+    currentImages = [];
+    console.log(images);
+    counter ++;
+    console.log(counter);
   };
-  console.log(currentImages);
-  currentImages = [];
-  console.log(images);
-  counter += 1;
 };
 
 document.getElementById('0').addEventListener('click', updateImages);
