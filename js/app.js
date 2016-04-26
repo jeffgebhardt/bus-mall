@@ -1,4 +1,5 @@
 var images = [];
+var counter = 0;
 
 function imageConstructor(imageName, filePath){
   'use strict';
@@ -32,13 +33,21 @@ var updateImages = function(){
   for (var i = 0; i < 3; i++) {
     var image = document.createElement('img');
     var randomNumber = Math.floor(Math.random() * (10 - 0) + 0);
+    console.log(randomNumber);
+    if (randomNumber == currentImages[0] || randomNumber == currentImages[1]) {
+      randomNumber = Math.floor(Math.random() * (10 - 0) + 0);
+    }
+    images[randomNumber].numTimesShown += 1;
     image.src = images[randomNumber].filePath;
     image.setAttribute('height', '250');
     image.setAttribute('width', '250');
     document.getElementById(i).appendChild(image);
     currentImages.push(randomNumber);
   };
+  console.log(currentImages);
   currentImages = [];
+  console.log(images);
+  counter += 1;
 };
 
 document.getElementById('0').addEventListener('click', updateImages);
