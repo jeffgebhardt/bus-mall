@@ -1,4 +1,6 @@
 var images = [];
+localStorage.setItem('images', JSON.stringify(images));
+
 var counter = 0;
 
 function imageConstructor(imageName, filePath){
@@ -27,9 +29,9 @@ new imageConstructor('scissors', 'img/scissors.jpg');
 new imageConstructor('shark', 'img/shark.jpg');
 new imageConstructor('sweep', 'img/sweep.png');
 new imageConstructor('tauntaun', 'img/tauntaun.jpg');
-new imageConstructor('unicorn', 'unicorn.jpg');
+new imageConstructor('unicorn', 'img/unicorn.jpg');
 new imageConstructor('usb.gif', 'img/usb.gif');
-new imageConstructor('water-can.jpg', 'img/water-can');
+new imageConstructor('water-can.jpg', 'img/water-can.jpg');
 new imageConstructor('wine-glass', 'img/wine-glass.jpg');
 
 var updateImages = function(){
@@ -49,6 +51,8 @@ var updateImages = function(){
     document.getElementById('0').innerHTML = null;
     document.getElementById('1').innerHTML = null;
     document.getElementById('2').innerHTML = null;
+
+    drawChart();
     break;
 
   case 15:
@@ -56,6 +60,8 @@ var updateImages = function(){
     document.getElementById('0').innerHTML = null;
     document.getElementById('1').innerHTML = null;
     document.getElementById('2').innerHTML = null;
+
+    drawChart();
     break;
 
   default:
@@ -68,10 +74,10 @@ var updateImages = function(){
 
     for (var i = 0; i < 3; i++) {
       var image = document.createElement('img');
-      var randomNumber = Math.floor(Math.random() * (19 - 0) + 0);
+      var randomNumber = Math.floor(Math.random() * (20 - 0) + 0);
       console.log(randomNumber);
       if (randomNumber == currentImages[0] || randomNumber == currentImages[1]) {
-        randomNumber = Math.floor(Math.random() * (10 - 0) + 0);
+        randomNumber = Math.floor(Math.random() * (20 - 0) + 0);
       }
       images[randomNumber].numTimesShown += 1;
       image.src = images[randomNumber].filePath;
@@ -94,15 +100,29 @@ document.getElementById('2').addEventListener('click', updateImages);
 
 updateImages();
 
-var ctx = document.getElementById('votesChart').getContext('2d');
+var drawChart = function(){
+  'use strict';
+  var names = [];
+  var votes = [];
 
-var votesChart = new Chart(ctx, {
-  type: 'bar',
-  data: {
-    labels: ['test1', 'test2', 'test3'],
-    datasets: [{
-      label: 'Number of Votes',
-      data: [5, 3, 2]
-    }]
-  },
-});
+  for (var i = 0; i < images.length; i++) {
+    names.push(images[i].imageName);
+    votes.push(images[i].numTimesShown);
+  }
+
+  localStorage.setItem('imageVotes', JSON.stringify(votes));
+  var retrievedData = localStorage.getItem('imageVotes');
+  var votes2 = JSON.parse(retrievedData);
+
+  var ctx = document.getElementById('votesChart').getContext('2d');
+  var votesChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: names,
+      datasets: [{
+        label: 'Number of Votes',
+        data: votes2
+      }]
+    },
+  });
+};
