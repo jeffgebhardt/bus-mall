@@ -21,6 +21,16 @@ new imageConstructor('chair', 'img/chair.jpg');
 new imageConstructor('cthulhu', 'img/cthulhu.jpg');
 new imageConstructor('dog-duck', 'img/dog-duck.jpg');
 new imageConstructor('dragon', 'img/dragon.jpg');
+new imageConstructor('pen', 'img/pen.jpg');
+new imageConstructor('pet-sweep', 'img/pet-sweep.jpg');
+new imageConstructor('scissors', 'img/scissors.jpg');
+new imageConstructor('shark', 'img/shark.jpg');
+new imageConstructor('sweep', 'img/sweep.png');
+new imageConstructor('tauntaun', 'img/tauntaun.jpg');
+new imageConstructor('unicorn', 'unicorn.jpg');
+new imageConstructor('usb.gif', 'img/usb.gif');
+new imageConstructor('water-can.jpg', 'img/water-can');
+new imageConstructor('wine-glass', 'img/wine-glass.jpg');
 
 var updateImages = function(){
   'use strict';
@@ -41,7 +51,7 @@ var updateImages = function(){
     document.getElementById('2').innerHTML = null;
     break;
 
-  case 16:
+  case 15:
     alert('Game over');
     document.getElementById('0').innerHTML = null;
     document.getElementById('1').innerHTML = null;
@@ -58,7 +68,7 @@ var updateImages = function(){
 
     for (var i = 0; i < 3; i++) {
       var image = document.createElement('img');
-      var randomNumber = Math.floor(Math.random() * (10 - 0) + 0);
+      var randomNumber = Math.floor(Math.random() * (19 - 0) + 0);
       console.log(randomNumber);
       if (randomNumber == currentImages[0] || randomNumber == currentImages[1]) {
         randomNumber = Math.floor(Math.random() * (10 - 0) + 0);
