@@ -1,4 +1,6 @@
 var images = [];
+var chartNames = [];
+var chartTimesShown = [];
 var counter = 0;
 
 function imageConstructor(imageName, filePath){
@@ -6,6 +8,7 @@ function imageConstructor(imageName, filePath){
   this.imageName = imageName;
   this.filePath = filePath;
   this.numTimesShown = 0;
+  this.numVotes = 0;
   this.numTimesClicked = 0;
 
   images.push(this);
@@ -21,12 +24,23 @@ new imageConstructor('chair', 'img/chair.jpg');
 new imageConstructor('cthulhu', 'img/cthulhu.jpg');
 new imageConstructor('dog-duck', 'img/dog-duck.jpg');
 new imageConstructor('dragon', 'img/dragon.jpg');
+new imageConstructor('pen', 'img/pen.jpg');
+new imageConstructor('pet-sweep', 'img/pet-sweep.jpg');
+new imageConstructor('scissors', 'img/scissors.jpg');
+new imageConstructor('shark', 'img/shark.jpg');
+new imageConstructor('sweep', 'img/sweep.png');
+new imageConstructor('tauntaun', 'img/tauntaun.jpg');
+new imageConstructor('unicorn', 'img/unicorn.jpg');
+new imageConstructor('usb', 'img/usb.gif');
+new imageConstructor('water-can', 'img/water-can.jpg');
+new imageConstructor('wine-glass', 'img/wine-glass.jpg');
+
 
 var updateImages = function(){
   'use strict';
 
   switch (counter) {
-  case 5:
+  case 10:
     var userAnswer = prompt('Would you like to keep playing? (y or n)');
     if (userAnswer == 'y') {
       counter++;
@@ -36,63 +50,60 @@ var updateImages = function(){
     else {
       alert('Game Over');
     }
-    document.getElementById('0').innerHTML = null;
-    document.getElementById('1').innerHTML = null;
-    document.getElementById('2').innerHTML = null;
+    document.getElementById('imagesContainer').innerHTML = null;
+    drawChart();
     break;
 
-  case 16:
+  case 20:
     alert('Game over');
-    document.getElementById('0').innerHTML = null;
-    document.getElementById('1').innerHTML = null;
-    document.getElementById('2').innerHTML = null;
+    document.getElementById('imagesContainer').innerHTML = null;
+    drawChart();
     break;
 
   default:
 
-    document.getElementById('0').innerHTML = null;
-    document.getElementById('1').innerHTML = null;
-    document.getElementById('2').innerHTML = null;
+    document.getElementById('imagesContainer').innerHTML = null;
 
     var currentImages = [];
 
     for (var i = 0; i < 3; i++) {
       var image = document.createElement('img');
-      var randomNumber = Math.floor(Math.random() * (10 - 0) + 0);
-      console.log(randomNumber);
-      if (randomNumber == currentImages[0] || randomNumber == currentImages[1]) {
+      var randomNumber = Math.floor(Math.random() * (19 - 0) + 0);
+      while (randomNumber == currentImages[0] || randomNumber == currentImages[1]) {
         randomNumber = Math.floor(Math.random() * (10 - 0) + 0);
       }
       images[randomNumber].numTimesShown += 1;
       image.src = images[randomNumber].filePath;
-      image.setAttribute('height', '250');
-      image.setAttribute('width', '250');
-      document.getElementById(i).appendChild(image);
+      document.getElementById('imagesContainer').appendChild(image);
       currentImages.push(randomNumber);
     };
-    console.log(currentImages);
     currentImages = [];
-    console.log(images);
     counter ++;
-    console.log(counter);
   };
 };
 
-document.getElementById('0').addEventListener('click', updateImages);
-document.getElementById('1').addEventListener('click', updateImages);
-document.getElementById('2').addEventListener('click', updateImages);
+document.getElementById('imagesContainer').addEventListener('click', updateImages);
 
-updateImages();
+var drawChart = function(){
+  'use strict';
+  var ctx = document.getElementById('votesChart').getContext('2d');
 
-var ctx = document.getElementById('votesChart').getContext('2d');
+  for (var i = 0; i < images.length; i++) {
+    chartNames.push(images[i].imageName);
+  }
 
-var votesChart = new Chart(ctx, {
-  type: 'bar',
-  data: {
-    labels: ['test1', 'test2', 'test3'],
-    datasets: [{
-      label: 'Number of Votes',
-      data: [5, 3, 2]
-    }]
-  },
-});
+  for (var i = 0; i < images.length; i++) {
+    chartTimesShown.push(images[i].numTimesShown);
+  }
+
+  var votesChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: chartNames,
+      datasets: [{
+        label: 'Number of Times Shown',
+        data: chartTimesShown
+      }]
+    },
+  });
+};
