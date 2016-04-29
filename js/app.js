@@ -5,6 +5,11 @@ var chartNames = [];
 var chartTimesShown = [];
 var counter = 0;
 
+//Local storage
+//-------------
+var retrievedData = localStorage.getItem('storage');
+var chartData = JSON.parse(retrievedData);
+
 //Object Constructor
 //------------------
 function imageConstructor(imageName, filePath){
@@ -12,8 +17,6 @@ function imageConstructor(imageName, filePath){
   this.imageName = imageName;
   this.filePath = filePath;
   this.numTimesShown = 0;
-  this.numVotes = 0;
-  this.numTimesClicked = 0;
 
   images.push(this);
 }
@@ -94,11 +97,8 @@ var drawChart = function(){
 
   for (var i = 0; i < images.length; i++) {
     chartTimesShown.push(images[i].numTimesShown);
+    localStorage.setItem('storage', JSON.stringify(chartTimesShown));
   }
-
-  localStorage.setItem('storage', JSON.stringify(chartTimesShown));
-  var retrievedData = localStorage.getItem('storage');
-  var chartData = JSON.parse(retrievedData);
 
   var votesChart = new Chart(ctx, {
     type: 'bar',
