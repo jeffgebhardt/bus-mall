@@ -77,7 +77,6 @@ var updateImages = function(){
     };
     currentImages = [];
     counter ++;
-    console.log(counter);
   };
 };
 
@@ -97,13 +96,17 @@ var drawChart = function(){
     chartTimesShown.push(images[i].numTimesShown);
   }
 
+  localStorage.setItem('storage', JSON.stringify(chartTimesShown));
+  var retrievedData = localStorage.getItem('storage');
+  var chartData = JSON.parse(retrievedData);
+
   var votesChart = new Chart(ctx, {
     type: 'bar',
     data: {
       labels: chartNames,
       datasets: [{
         label: 'Number of Times Shown',
-        data: chartTimesShown
+        data: chartData
       }]
     },
   });
@@ -114,9 +117,11 @@ var drawChart = function(){
 var drawButton = function(){
   'use strict';
   var moreVotesButton = document.createElement('Button');
+  moreVotesButton.innerHTML = 'Keep Playing!';
   document.getElementById('button1').appendChild(moreVotesButton);
 
   var resultsButton = document.createElement('Button');
+  resultsButton.innerHTML = 'See My Results!';
   document.getElementById('button2').appendChild(resultsButton);
 };
 
