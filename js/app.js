@@ -1,8 +1,12 @@
+//Global Variables
+//----------------
 var images = [];
 var chartNames = [];
 var chartTimesShown = [];
 var counter = 0;
 
+//Object Constructor
+//------------------
 function imageConstructor(imageName, filePath){
   'use strict';
   this.imageName = imageName;
@@ -14,6 +18,8 @@ function imageConstructor(imageName, filePath){
   images.push(this);
 }
 
+//Object Declerations
+//-------------------
 new imageConstructor('bag', 'img/bag.jpg');
 new imageConstructor('banana', 'img/banana.jpg');
 new imageConstructor('bathroom', 'img/bathroom.jpg');
@@ -35,27 +41,19 @@ new imageConstructor('usb', 'img/usb.gif');
 new imageConstructor('water-can', 'img/water-can.jpg');
 new imageConstructor('wine-glass', 'img/wine-glass.jpg');
 
-
+//Creates 3 New images
+//--------------------
 var updateImages = function(){
   'use strict';
 
   switch (counter) {
   case 10:
-    var userAnswer = prompt('Would you like to keep playing? (y or n)');
-    if (userAnswer == 'y') {
-      counter++;
-      this.updateImagesTwo = updateImages();
-      updateImagesTwo();
-    }
-    else {
-      alert('Game Over');
-    }
+    counter++;
     document.getElementById('imagesContainer').innerHTML = null;
-    drawChart();
+    drawButton();
     break;
 
-  case 20:
-    alert('Game over');
+  case 21:
     document.getElementById('imagesContainer').innerHTML = null;
     drawChart();
     break;
@@ -63,6 +61,7 @@ var updateImages = function(){
   default:
 
     document.getElementById('imagesContainer').innerHTML = null;
+    document.getElementById('buttonsContainer').innerHTML = null;
 
     var currentImages = [];
 
@@ -79,11 +78,14 @@ var updateImages = function(){
     };
     currentImages = [];
     counter ++;
+    console.log(counter);
   };
 };
 
-document.getElementById('imagesContainer').addEventListener('click', updateImages);
+updateImages();
 
+//Draw Chart
+//----------
 var drawChart = function(){
   'use strict';
   var ctx = document.getElementById('votesChart').getContext('2d');
@@ -107,3 +109,20 @@ var drawChart = function(){
     },
   });
 };
+
+//Draw Button
+//-----------
+var drawButton = function(){
+  'use strict';
+  var moreVotesButton = document.createElement('Button');
+  document.getElementById('button1').appendChild(moreVotesButton);
+
+  var resultsButton = document.createElement('Button');
+  document.getElementById('button2').appendChild(resultsButton);
+};
+
+//Event Listeners
+//---------------
+document.getElementById('imagesContainer').addEventListener('click', updateImages);
+document.getElementById('button1').addEventListener('click', updateImages);
+document.getElementById('button2').addEventListener('click', drawChart);
