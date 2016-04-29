@@ -41,7 +41,7 @@ new imageConstructor('usb', 'img/usb.gif');
 new imageConstructor('water-can', 'img/water-can.jpg');
 new imageConstructor('wine-glass', 'img/wine-glass.jpg');
 
-//Creates 3 New images
+//Creates 3 Random Images
 //--------------------
 var updateImages = function(){
   'use strict';
@@ -55,13 +55,12 @@ var updateImages = function(){
 
   case 21:
     document.getElementById('imagesContainer').innerHTML = null;
-    drawChart();
+    drawButton();
+    document.getElementById('button1').innerHTML = null;
     break;
 
   default:
-
     document.getElementById('imagesContainer').innerHTML = null;
-    document.getElementById('buttonsContainer').innerHTML = null;
 
     var currentImages = [];
 
@@ -121,8 +120,16 @@ var drawButton = function(){
   document.getElementById('button2').appendChild(resultsButton);
 };
 
+var clearButtons = function(){
+  'use strict';
+  document.getElementById('button1').innerHTML = null;
+  document.getElementById('button2').innerHTML = null;
+};
+
 //Event Listeners
 //---------------
 document.getElementById('imagesContainer').addEventListener('click', updateImages);
-document.getElementById('button1').addEventListener('click', updateImages);
-document.getElementById('button2').addEventListener('click', drawChart);
+document.getElementById('button1').addEventListener('click', updateImages, clearButtons);
+document.getElementById('button2').addEventListener('click', drawChart, clearButtons);
+document.getElementById('button1').addEventListener('click', clearButtons);
+document.getElementById('button2').addEventListener('click', clearButtons);
